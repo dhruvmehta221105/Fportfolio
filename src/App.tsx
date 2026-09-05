@@ -11,7 +11,7 @@ import SiteFooter from './components/SiteFooter';
 import Ticker from './components/Ticker';
 import { portfolioData } from './portfolioData';
 
-const { person, navigation, skills, projects, education, certifications, experience, contact } = portfolioData;
+const { person, navigation, skills, projects, education, research, certifications, experience, contact } = portfolioData;
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -62,7 +62,7 @@ export default function App() {
       <IntroSection person={person} skills={skills} onOpenAbout={() => setShowAboutModal(true)} />
       <ProjectsSection projects={projects} activeProjectIndex={activeProjectIndex} onProjectChange={setActiveProjectIndex} onMouseMove={handleMouseMove} />
       <SkillsSection />
-      <AboutSection education={education} certifications={certifications} experience={experience} onMouseMove={handleMouseMove} />
+      <AboutSection education={education} research={research} certifications={certifications} experience={experience} onMouseMove={handleMouseMove} />
       <ContactSection contact={contact} />
       <SiteFooter name={person.name} />
       <AboutModal person={person} open={showAboutModal} onClose={() => setShowAboutModal(false)} />

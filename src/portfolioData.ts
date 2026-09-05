@@ -13,7 +13,23 @@ export type Experience = {
   role: string;
   date: string;
   company: string;
+  employmentType?: string;
+  location?: string;
+  description?: string;
   bullets: string[];
+};
+
+export type Research = {
+  venue: string;
+  title: string;
+  description: string;
+  recognition: string;
+};
+
+export type Certification = {
+  name: string;
+  issuer: string;
+  date?: string;
 };
 
 export const portfolioData = {
@@ -21,69 +37,52 @@ export const portfolioData = {
     name: 'Dhruv Mehta',
     firstName: 'Dhruv',
     logoName: 'Dhruv Mehta',
-    headline: ['FULLSTACK', '& AI/ML', 'ENGINEER'],
+    headline: ['FULL-STACK', '& AI', 'DEVELOPER'],
     greeting: 'Hello, my name is Dhruv and I am a',
     avatar: '/avatar.png',
     fallbackAvatar: '/avatar.jpg',
-    location: '3rd Year Student',
-    specialties: ['React', 'TypeScript', 'Python', 'PyTorch', 'SQL'],
-    intro: "Combining full-stack development with AI to build impactful digital solutions. I'm someone who enjoys exploring new ideas, experimenting with emerging technologies, and constantly pushing myself to become a better developer.",
-    about: "I'm a third-year Computer Science student passionate about creating products that combine thoughtful design with powerful technology. My interests span full-stack web development, artificial intelligence, and machine learning, where I focus on building applications that are fast, scalable, and solve real-world problems. I'm always looking for opportunities to learn, innovate, and grow as a developer.",
+    location: 'Full-Stack Software Developer',
+    specialties: ['React.js', 'Next.js', 'Node.js', 'Python', 'MongoDB'],
+    intro: 'I build AI-powered web applications and scalable backend systems with a strong focus on modern frontend development, thoughtful UI/UX, and practical product experiences.',
+    about: "I'm a full-stack software developer specializing in AI-powered web applications, scalable backend systems, and modern frontend development. I work with React.js, Next.js, Node.js, MongoDB, Python, and modern AI APIs, while bringing a strong interest in UI/UX design, Figma, and rapid prototyping. I enjoy turning ambitious ideas into useful, polished products.",
     availableForWork: true,
     resume: {
-      url: '/Tapasya_Shrestha_Resume.pdf',
-      filename: 'Tapasya_Shrestha_Resume.pdf'
+      url: '/dhruv mehta resume.pdf',
+      filename: 'Dhruv_Mehta_Resume.pdf'
     }
   },
   navigation: {
     items: ['projects', 'skills', 'about', 'contact'],
     aboutLabel: 'education & experience'
   },
-  skills: ['React.js', 'TypeScript', 'Python', 'PyTorch'],
+  skills: ['Python', 'Java', 'JavaScript', 'C++', 'SQL', 'React.js', 'Next.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'Node.js', 'Express.js', 'REST APIs', 'JWT Authentication', 'MongoDB', 'MySQL', 'Git', 'GitHub', 'Postman', 'VS Code', 'Figma', 'Gemini API', 'Prompt Engineering', 'API Integration', 'Responsive Design', 'Whisper', 'Groq'],
   projects: [
     {
       id: 1,
-      title: 'InterviewX - AI-Powered Interview Preparation Platform',
-      shortTitle: 'InterviewX',
-      image: '/Sehai.jpg',
-      category: 'AI-Powered Interview Platform',
-      github: 'https://github.com/tapasyashrestha/Sehai',
-      tech: ['React.js', 'TypeScript', 'Tailwind CSS', 'Vite', 'React Router', 'XGBoost', 'Python'],
+      title: 'Kavach - AI Security Platform',
+      shortTitle: 'Kavach',
+      image: '/new.png',
+      category: 'AI Security Platform',
+      github: 'https://github.com/dhruvmehta221105/Kavach',
+      tech: ['Next.js', 'React.js', 'Node.js', 'Express.js', 'MongoDB', 'Groq'],
       bullets: [
-        'Developed a voice-enabled healthcare platform to assist ANMs (Auxiliary Nurse Midwives) in recording patient symptoms and managing rural healthcare workflows.',
-        'Integrated an XGBoost classifier trained on symptom data to predict probable diseases, enabling early diagnosis support for frontline healthcare workers in low-resource rural settings.',
-        'Designed an AI-assisted triage and referral system enabling seamless escalation of cases from Sub-Centres/ANMs -> PHCs (Primary Health Centres) -> CHCs (Community Health Centres).',
-        'Implemented multilingual symptom-reporting workflows to improve accessibility for healthcare workers and patients across diverse linguistic regions.'
+        'Developed an AI-powered security platform to detect prompt injection, jailbreak attempts, sensitive data leakage, and malicious prompts targeting large language models.',
+        'Implemented prompt risk scoring and threat classification for real-time AI threat assessment.',
+        'Built secure authentication, scan history, and an analytics dashboard for monitoring security findings.'
       ]
     },
     {
       id: 0,
-      title: 'Kavach ',
-      shortTitle: 'Vakeel',
-      image: '/Vakeel.jpg',
-      category: 'B2B Legal Tech Platform',
-      github: 'https://github.com/tapasyashrestha/Vakeel',
-      tech: ['Firebase Auth', 'Firestore', 'Firebase Storage', 'FastAPI', 'React', 'OpenAI Embeddings', 'Indian Kanoon API'],
+      title: 'InterviewX - Interview Prep Platform',
+      shortTitle: 'InterviewX',
+      image: '/new.png',
+      category: 'AI-Powered Interview Platform',
+      github: 'https://github.com/dhruvmehta221105/InterviewX',
+      tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'OpenAI API', 'Whisper'],
       bullets: [
-        'Designing a B2B legal tech platform enabling advocate chambers to manage drafting, case research, and document workflows with verified, source-traceable outputs rather than raw generative speed.',
-        'Architected a multi-tenant system using Firebase custom claims and Firestore path-based collection structure, with security rules enforcing strict per-chamber data isolation.',
-        'Built a Retrieval-Augmented Generation (RAG) pipeline separating the public Indian Kanoon case-law corpus from private chamber document embeddings, ensuring no cross-tenant leakage.',
-        'Defined core product systems spanning a Unified Retrieval Engine, Drafting Layer, Document Handling, Chamber Activity Layer, and a human-entered Deadlines & Obligations Engine; produced full PRD and system architecture documentation.'
-      ]
-    },
-    {
-      id: 2,
-      title: 'ManageMyBiz - AI-Powered Business Management Platform',
-      shortTitle: 'Tarang',
-      image: '/Tarang.jpg',
-      category: 'AI-Powered Decision Intelligence Platform',
-      github: 'https://github.com/tapasyashrestha/Tarang',
-      tech: ['React', 'Tailwind CSS', 'Recharts', 'FastAPI', 'Scikit-learn', 'XGBoost', 'Pandas', 'PostgreSQL'],
-      bullets: [
-        'Built a decision intelligence platform that simulates the ripple effects of business decisions (price, inventory, marketing spend) on sales, revenue, delivery performance, and customer satisfaction before implementation.',
-        'Implemented dependency and causality mapping using ML-driven scenario simulation to surface hidden relationships between business variables.',
-        'Developed risk and consequence detection to flag potential inventory shortages, delivery delays, and rating declines ahead of time, alongside a what-if simulator and revenue/sales forecasting.',
-        'Designed an interactive business dashboard (React + Recharts) translating model outputs into strategic recommendations for decision-makers.'
+        'Built an AI-powered mock interview platform using the OpenAI API to simulate technical interviews with dynamic question generation.',
+        'Implemented secure authentication and interview session management for personalized practice workflows.',
+        'Added transcript generation with Whisper and AI-based performance evaluation with personalized feedback.'
       ]
     }
   ] satisfies Project[],
@@ -92,30 +91,38 @@ export const portfolioData = {
     status: 'Currently: 3rd Year',
     graduation: 'Class of 2028'
   },
-  certifications: [
-    'Certificate of Appreciation - SKILLiGENCE EdTech Pvt. Ltd. (Jul 2026)',
-    'Internship Appreciation Letter - SKILLiGENCE EdTech Pvt. Ltd. (Jul 2026)'
-  ],
+  research: {
+    venue: 'Springer ICCCN 2025',
+    title: 'Building the Decentralized Future: Blockchain Innovation with Ethereum at the Core',
+    description: 'Published and presented research focused on blockchain, Ethereum, and Web3 technologies.',
+    recognition: 'Awarded First Prize among international research presentations at the Springer International Conference organized in collaboration with Manchester Metropolitan University, UK.'
+  } satisfies Research,
+  certifications: [] as Certification[],
   experience: [
     {
-      role: 'AI-ML Intern',
-      date: '20 May 2026 - 4 Jul 2026',
-      company: 'SKILLiGENCE EdTech Pvt. Ltd.',
-      bullets: [
-        'Selected as AI-ML Intern to design and build AI/ML projects for the company over the internship period.',
-        'Delivered multiple production-ready packages and source code submissions in line with internship deliverables.',
-        'Completed the internship successfully and received an Internship Appreciation Letter and Certificate of Appreciation.'
-      ]
+      role: 'Vice President Operations',
+      company: 'E-Cell, Bennett University',
+      date: 'Sep 2026 - Present',
+      employmentType: 'Full-time',
+      location: 'Noida, Uttar Pradesh, India - On-site',
+      bullets: []
     },
     {
-      role: 'Senior Coordinator',
-      date: 'May 2025 - May 2026',
-      company: 'LearnIT Club',
-      bullets: [
-        'Organized campus-wide hackathons, technical workshops, and coding challenges.',
-        'Mentored 10+ junior members in Web Development and Machine Learning foundations.',
-        'Led cross-functional teams in club management and coordinated speaker events.'
-      ]
+      role: 'Head of Design',
+      company: 'GDG On Campus, Bennett University',
+      date: 'Sep 2025 - May 2026',
+      employmentType: 'Full-time',
+      location: 'Noida, Uttar Pradesh, India - On-site',
+      bullets: []
+    },
+    {
+      role: 'Head of Design',
+      company: 'E-Cell, Bennett University',
+      date: 'Jan 2025 - Dec 2025',
+      employmentType: 'Full-time',
+      location: 'Noida, Uttar Pradesh, India - On-site',
+      description: 'As Head of the Design Team at SPARK E-Cell, my role involves leading creative projects, enhancing branding, and ensuring impactful visuals.',
+      bullets: []
     }
   ] satisfies Experience[],
   contact: {

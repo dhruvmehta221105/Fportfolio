@@ -1,15 +1,16 @@
-import { Award, Briefcase, GraduationCap } from 'lucide-react';
+import { Award, BriefcaseBusiness, GraduationCap, ShieldCheck } from 'lucide-react';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';
 import type { portfolioData } from '../portfolioData';
 
 type AboutSectionProps = {
   education: typeof portfolioData.education;
+  research: typeof portfolioData.research;
   certifications: typeof portfolioData.certifications;
   experience: typeof portfolioData.experience;
   onMouseMove: React.MouseEventHandler<HTMLDivElement>;
 };
 
-export default function AboutSection({ education, certifications, experience, onMouseMove }: AboutSectionProps) {
+export default function AboutSection({ education, research, certifications, experience, onMouseMove }: AboutSectionProps) {
   return (
     <section id="about" className="section section-dark">
       <div className="container">
@@ -27,17 +28,43 @@ export default function AboutSection({ education, certifications, experience, on
 
           <ScrollStackItem itemClassName="glow-card certifications-card-stack" onMouseMove={onMouseMove}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px' }}><Award size={26} /> Certifications</h3>
-              <ul className="timeline-desc" style={{ paddingLeft: '0', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>{certifications.map((certification) => <li key={certification} className="timeline-bullet" style={{ fontSize: '14px', lineHeight: '1.6' }}>{certification}</li>)}</ul>
+              <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px' }}><Award size={26} /> Research & Recognition</h3>
+              <p className="timeline-company" style={{ fontSize: '13px' }}>{research.venue}</p>
+              <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6', marginTop: '8px' }}>{research.title}</p>
+              <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>{research.description}</p>
+              <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>{research.recognition}</p>
             </div>
           </ScrollStackItem>
 
           <ScrollStackItem itemClassName="glow-card experience-card-stack" onMouseMove={onMouseMove}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px', marginBottom: '8px' }}><Briefcase size={24} /> Experience</h3>
-              <div className="timeline">{experience.map((job, index) => <div key={`${job.company}-${job.role}`} className="timeline-item" style={{ marginBottom: index === experience.length - 1 ? '0' : '28px' }}><div className="timeline-dot"></div><div className="timeline-header"><h3 className="timeline-role" style={{ fontSize: '18px' }}>{job.role}</h3><span className="timeline-date">{job.date}</span></div><p className="timeline-company" style={{ fontSize: '13px' }}>{job.company}</p><ul className="timeline-desc" style={{ marginTop: '12px' }}>{job.bullets.map((bullet, bulletIndex) => <li key={bullet} className="timeline-bullet" style={{ fontSize: '13.5px', marginBottom: bulletIndex === job.bullets.length - 1 ? '0px' : '8px' }}>{bullet}</li>)}</ul></div>)}</div>
+              <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px' }}><BriefcaseBusiness size={26} /> Experience</h3>
+              {experience.map((item) => (
+                <div key={`${item.role}-${item.company}`} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+                    <div><p className="education-title" style={{ fontSize: '18px' }}>{item.role}</p><p className="timeline-company" style={{ fontSize: '13px' }}>{item.company}{item.employmentType ? ` - ${item.employmentType}` : ''}</p></div>
+                    <p className="timeline-company" style={{ fontSize: '13px' }}>{item.date}</p>
+                  </div>
+                  {item.location && <p className="timeline-company" style={{ fontSize: '13px' }}>{item.location}</p>}
+                  {item.description && <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>{item.description}</p>}
+                  {item.bullets.map((bullet) => <p className="timeline-desc" key={bullet} style={{ fontSize: '14px', lineHeight: '1.6' }}>{bullet}</p>)}
+                </div>
+              ))}
             </div>
           </ScrollStackItem>
+
+          <ScrollStackItem itemClassName="glow-card certifications-card-stack" onMouseMove={onMouseMove}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px' }}><ShieldCheck size={26} /> Certifications</h3>
+              {certifications.length > 0 ? certifications.map((certification) => (
+                <div key={`${certification.name}-${certification.issuer}`}>
+                  <p className="education-title" style={{ fontSize: '18px' }}>{certification.name}</p>
+                  <p className="timeline-company" style={{ fontSize: '13px' }}>{certification.issuer}{certification.date ? ` | ${certification.date}` : ''}</p>
+                </div>
+              )) : <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>Certifications will be added here as they are completed.</p>}
+            </div>
+          </ScrollStackItem>
+
         </ScrollStack>
       </div>
     </section>

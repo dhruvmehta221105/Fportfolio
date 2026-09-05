@@ -1,10 +1,20 @@
-# Tapasya Shrestha Portfolio
+# Portfolio
 
-A modern portfolio showcasing my projects, skills, and journey in Full-Stack Development, Artificial Intelligence, and Machine Learning.
+A React portfolio for showcasing projects, skills, education, experience, and contact details.
 
-## 🚀 Live Demo
-[
-🔗(https://tapasyaportfolio.vercel.app/)
+## Edit Your Information
+
+All portfolio content is stored in one place:
+
+```text
+src/portfolioData.ts
+```
+
+Update the values in `portfolioData` to change your name, hero text, avatar, resume, skills, projects, education, certifications, experience, and contact links. Add or remove projects and experience entries directly from their arrays. Place matching images and documents in `public/` and update their paths in the data file.
+
+## Live Demo
+
+[View the live portfolio](https://tapasyaportfolio.vercel.app/)
 
 ## 🛠 Tech Stack
 
@@ -24,4 +34,3 @@ npm run dev
 ```
 
 
-⭐ Feel free to explore the code and share your feedback!

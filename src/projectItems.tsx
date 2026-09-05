@@ -1,5 +1,3 @@
-export const projectItems = [
-    { image: '/sehai_project.png', text: 'SEHAI' },
-    { image: '/vakeel.png', text: 'Vakeel' },
-    { image: '/tarang_project.png', text: 'Tarang ' }
-];
+import { portfolioData } from './portfolioData';
+
+export const projectItems = portfolioData.projects.map(({ image, shortTitle: text }) => ({ image, text }));

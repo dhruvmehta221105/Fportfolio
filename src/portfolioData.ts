@@ -47,7 +47,7 @@ export const portfolioData = {
     about: "I'm a full-stack software developer specializing in AI-powered web applications, scalable backend systems, and modern frontend development. I work with React.js, Next.js, Node.js, MongoDB, Python, and modern AI APIs, while bringing a strong interest in UI/UX design, Figma, and rapid prototyping. I enjoy turning ambitious ideas into useful, polished products.",
     availableForWork: true,
     resume: {
-      url: '/dhruv mehta resume.pdf',
+      url: '/dhruv-mehta-resume.pdf',
       filename: 'Dhruv_Mehta_Resume.pdf'
     }
   },

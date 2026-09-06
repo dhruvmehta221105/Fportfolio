@@ -37,7 +37,7 @@ export const portfolioData = {
     name: 'Dhruv Mehta',
     firstName: 'Dhruv',
     logoName: 'Dhruv Mehta',
-    headline: ['FULL-STACK', '& AI', 'DEVELOPER'],
+    headline: ['FULL-STACK &', 'UI/UX Designer', ],
     greeting: 'Hello, my name is Dhruv and I am a',
     avatar: '/avatar.png',
     fallbackAvatar: '/avatar.jpg',
@@ -55,8 +55,21 @@ export const portfolioData = {
     items: ['projects', 'skills', 'about', 'contact'],
     aboutLabel: 'education & experience'
   },
-  skills: ['Python', 'Java', 'JavaScript', 'C++', 'SQL', 'React.js', 'Next.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'Node.js', 'Express.js', 'REST APIs', 'JWT Authentication', 'MongoDB', 'MySQL', 'Git', 'GitHub', 'Postman', 'VS Code', 'Figma', 'Gemini API', 'Prompt Engineering', 'API Integration', 'Responsive Design', 'Whisper', 'Groq'],
-  projects: [
+ skills: [
+  'Python',
+  'TypeScript',
+  'JavaScript',
+  'C++',
+  'React',
+  'Next.js',
+  'Node.js',
+  'Express.js',
+  'PostgreSQL',
+  'MongoDB',
+  'REST APIs',
+  'Git & GitHub',
+  'AI/LLM Integration',
+],  projects: [
     {
       id: 1,
       title: 'Kavach - AI Security Platform',

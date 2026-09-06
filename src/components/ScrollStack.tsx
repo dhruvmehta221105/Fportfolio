@@ -215,7 +215,7 @@ const ScrollStack = ({
         touchMultiplier: 2,
         infinite: false,
         wheelMultiplier: 1,
-        lerp: 0.1
+        lerp: 0.08
       });
 
       lenis.on('scroll', handleScroll);
@@ -241,7 +241,7 @@ const ScrollStack = ({
         touchMultiplier: 2,
         infinite: false,
         wheelMultiplier: 1,
-        lerp: 0.1
+        lerp: 0.08
       });
 
       lenis.on('scroll', handleScroll);

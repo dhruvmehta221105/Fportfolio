@@ -15,7 +15,7 @@ export default function AboutSection({ education, research, certifications, expe
     <section id="about" className="section section-dark">
       <div className="container">
         <div className="section-header"><h2 className="section-title">Education & <span>Experience</span></h2><div className="section-line"></div></div>
-        <ScrollStack useWindowScroll={true} itemStackDistance={24} itemScale={0.02} itemDistance={100} stackPosition="15%" baseScale={0.92}>
+        <ScrollStack useWindowScroll={true} itemStackDistance={24} itemScale={0.02} itemDistance={64} stackPosition="15%" baseScale={0.92}>
           <ScrollStackItem itemClassName="glow-card education-card-stack" onMouseMove={onMouseMove}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}><div className="education-icon" style={{ flexShrink: 0 }}><GraduationCap size={28} /></div><div><h3 className="education-title" style={{ fontSize: '24px' }}>{education.degree}</h3></div></div>

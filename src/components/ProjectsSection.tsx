@@ -39,7 +39,7 @@ export default function ProjectsSection({ projects, activeProjectIndex, onProjec
           <div className="project-visual-stage">
             <AnimatePresence mode="wait">
               {activeProject && (
-                <motion.div key={activeProject.id} className="project-visual-frame" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.35 }}>
+                <motion.div key={activeProject.id} className="project-visual-frame" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}>
                   <img src={activeProject.image} alt={`${activeProject.shortTitle} project preview`} />
                   <div className="project-visual-overlay"></div>
                   <span className="project-visual-number">{String(activeProjectIndex + 1).padStart(2, '0')}</span>
@@ -56,7 +56,7 @@ export default function ProjectsSection({ projects, activeProjectIndex, onProjec
           <div className="projects-details-column">
             <AnimatePresence mode="wait">
               {activeProject && (
-                <motion.div key={activeProject.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className="project-card active-details-card" onMouseMove={onMouseMove}>
+                <motion.div key={activeProject.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }} className="project-card active-details-card" onMouseMove={onMouseMove}>
                   <div>
                     <div className="project-top"><span className="project-category">{activeProject.category}</span><a href={activeProject.github} target="_blank" rel="noreferrer" className="project-link">View on GitHub <ExternalLink size={14} /></a></div>
                     <h3 className="project-title">{activeProject.title}</h3>

@@ -7,7 +7,7 @@
 }
 
 .scroll-stack-inner {
-  padding: 5vh 0 380px; /* Increased bottom padding to accommodate pinned card translations and prevent overlapping the contact section */
+  padding: 2vh 0 220px;
   position: relative;
   display: flex;
   flex-direction: column;

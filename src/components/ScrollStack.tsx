@@ -47,6 +47,7 @@ const ScrollStack = ({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const stackCompletedRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
+  const scrollFrameRef = useRef<number | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const lastTransformsRef = useRef<Map<number, { translateY: number; scale: number; rotation: number; blur: number }>>(new Map());
@@ -203,7 +204,12 @@ const ScrollStack = ({
   ]);
 
   const handleScroll = useCallback(() => {
-    updateCardTransforms();
+    if (scrollFrameRef.current !== null) return;
+
+    scrollFrameRef.current = requestAnimationFrame(() => {
+      scrollFrameRef.current = null;
+      updateCardTransforms();
+    });
   }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
@@ -285,7 +291,11 @@ const ScrollStack = ({
       card.style.perspective = '1000px';
     });
 
-    setupLenis();
+    if (useWindowScroll) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    } else {
+      setupLenis();
+    }
 
     updateCardTransforms();
 
@@ -293,8 +303,14 @@ const ScrollStack = ({
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      if (scrollFrameRef.current !== null) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
       if (lenisRef.current) {
         lenisRef.current.destroy();
+      }
+      if (useWindowScroll) {
+        window.removeEventListener('scroll', handleScroll);
       }
       stackCompletedRef.current = false;
       cardsRef.current = [];

@@ -1,4 +1,4 @@
-import { Award, BriefcaseBusiness, GraduationCap, ShieldCheck } from 'lucide-react';
+import { Award, ArrowUpRight, BriefcaseBusiness, ExternalLink, GraduationCap, ShieldCheck } from 'lucide-react';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';
 import type { portfolioData } from '../portfolioData';
 
@@ -15,7 +15,7 @@ export default function AboutSection({ education, research, certifications, expe
     <section id="about" className="section section-dark">
       <div className="container">
         <div className="section-header"><h2 className="section-title">Education & <span>Experience</span></h2><div className="section-line"></div></div>
-        <ScrollStack useWindowScroll={true} itemStackDistance={24} itemScale={0.02} itemDistance={64} stackPosition="15%" baseScale={0.92}>
+        <ScrollStack useWindowScroll={true} itemStackDistance={24} itemScale={0.02} itemDistance={64} stackPosition="15%" baseScale={0.92} blurAmount={3}>
           <ScrollStackItem itemClassName="glow-card education-card-stack" onMouseMove={onMouseMove}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}><div className="education-icon" style={{ flexShrink: 0 }}><GraduationCap size={28} /></div><div><h3 className="education-title" style={{ fontSize: '24px' }}>{education.degree}</h3></div></div>
@@ -33,6 +33,9 @@ export default function AboutSection({ education, research, certifications, expe
               <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6', marginTop: '8px' }}>{research.title}</p>
               <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>{research.description}</p>
               <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>{research.recognition}</p>
+              <a className="research-publication-link" href={research.url} target="_blank" rel="noreferrer">
+                Open publication <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
             </div>
           </ScrollStackItem>
 
@@ -57,9 +60,13 @@ export default function AboutSection({ education, research, certifications, expe
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h3 className="education-title" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '22px' }}><ShieldCheck size={26} /> Certifications</h3>
               {certifications.length > 0 ? certifications.map((certification) => (
-                <div key={`${certification.name}-${certification.issuer}`}>
+                <div key={`${certification.name}-${certification.issuer}`} className="certification-item">
                   <p className="education-title" style={{ fontSize: '18px' }}>{certification.name}</p>
-                  <p className="timeline-company" style={{ fontSize: '13px' }}>{certification.issuer}{certification.date ? ` | ${certification.date}` : ''}</p>
+                  <p className="timeline-company" style={{ fontSize: '13px' }}>{certification.issuer} | {certification.date}</p>
+                  <p className="timeline-desc certification-id" style={{ fontSize: '13px', lineHeight: '1.6' }}>Credential ID {certification.credentialId}</p>
+                  <a className="certification-link" href={certification.url} target="_blank" rel="noreferrer">
+                    Show credential <ExternalLink size={14} aria-hidden="true" />
+                  </a>
                 </div>
               )) : <p className="timeline-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>Certifications will be added here as they are completed.</p>}
             </div>

@@ -24,12 +24,15 @@ export type Research = {
   title: string;
   description: string;
   recognition: string;
+  url: string;
 };
 
 export type Certification = {
   name: string;
   issuer: string;
-  date?: string;
+  date: string;
+  credentialId: string;
+  url: string;
 };
 
 export const portfolioData = {
@@ -108,33 +111,45 @@ export const portfolioData = {
     venue: 'Springer ICCCN 2025',
     title: 'Building the Decentralized Future: Blockchain Innovation with Ethereum at the Core',
     description: 'Published and presented research focused on blockchain, Ethereum, and Web3 technologies.',
-    recognition: 'Awarded First Prize among international research presentations at the Springer International Conference organized in collaboration with Manchester Metropolitan University, UK.'
+    recognition: 'Awarded First Prize among international research presentations at the Springer International Conference organized in collaboration with Manchester Metropolitan University, UK.',
+    url: 'https://link.springer.com/chapter/10.1007/978-3-032-21499-7_27'
   } satisfies Research,
-  certifications: [] as Certification[],
+  certifications: [
+    {
+      name: 'Programming in Python',
+      issuer: 'Meta',
+      date: 'Issued Feb 2026',
+      credentialId: 'OUT6MC6AEX30',
+      url: 'https://www.coursera.org/account/accomplishments/verify/OUT6MC6AEX30'
+    },
+    {
+      name: 'Introduction to Back-End Development',
+      issuer: 'Meta',
+      date: 'Issued Jan 2026',
+      credentialId: '7GW0H2L9HF6U',
+      url: 'https://www.coursera.org/account/accomplishments/verify/7GW0H2L9HF6U'
+    }
+  ] satisfies Certification[],
   experience: [
     {
-      role: 'Vice President Operations',
+      role: 'Vice President, Operations',
       company: 'E-Cell, Bennett University',
       date: 'Sep 2026 - Present',
-      employmentType: 'Full-time',
-      location: 'Noida, Uttar Pradesh, India - On-site',
+      description: 'Coordinate programs and cross-functional teams for entrepreneurship initiatives.',
       bullets: []
     },
     {
-      role: 'Head of Design',
+      role: 'Design Lead',
       company: 'GDG On Campus, Bennett University',
       date: 'Sep 2025 - May 2026',
-      employmentType: 'Full-time',
-      location: 'Noida, Uttar Pradesh, India - On-site',
+      description: 'Led visual direction and communication for a developer community.',
       bullets: []
     },
     {
-      role: 'Head of Design',
+      role: 'Design Lead',
       company: 'E-Cell, Bennett University',
       date: 'Jan 2025 - Dec 2025',
-      employmentType: 'Full-time',
-      location: 'Noida, Uttar Pradesh, India - On-site',
-      description: 'As Head of the Design Team at SPARK E-Cell, my role involves leading creative projects, enhancing branding, and ensuring impactful visuals.',
+      description: 'Directed design and brand communication for student entrepreneurship programs.',
       bullets: []
     }
   ] satisfies Experience[],

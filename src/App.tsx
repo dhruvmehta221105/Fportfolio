@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Lenis from 'lenis';
 import AboutModal from './components/AboutModal';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
@@ -30,6 +31,29 @@ export default function App() {
     document.body.style.overflow = showAboutModal ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [showAboutModal]);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+      wheelMultiplier: 1,
+      lerp: 0.08,
+    });
+
+    let animationFrame = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      animationFrame = requestAnimationFrame(raf);
+    };
+
+    animationFrame = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      lenis.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -758,10 +758,40 @@ a {
 
 /* Footer styling */
 .footer {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: 250px;
   padding: 20px 0;
   border-top: 1px solid var(--border);
   background-color: #fafafa;
   text-align: center;
+}
+
+.footer-wordmark {
+  position: absolute;
+  left: 50%;
+  bottom: -0.04em;
+  z-index: 0;
+  max-width: 100%;
+  color: transparent;
+  font-family: var(--font-heading);
+  font-size: clamp(4.5rem, 18vw, 15rem);
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  transform: translateX(-50%);
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.12vw, 2px) rgba(11, 11, 12, 0.32);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.footer-content {
+  position: relative;
+  z-index: 1;
 }
 
 .footer-text {

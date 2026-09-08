@@ -152,7 +152,7 @@ export const portfolioData = {
       description: 'Directed design and brand communication for student entrepreneurship programs.',
       bullets: []
     }
-  ] satisfies Experience[],
+  ] as Experience[],
   contact: {
     message: 'I am currently open to internships and junior developer opportunities. If you have an exciting project, a role that fits my profile, or just want to connect, feel free to reach out!',
     email: 'dhruv.mehta3141@gmail.com',

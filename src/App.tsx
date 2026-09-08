@@ -88,7 +88,12 @@ export default function App() {
       <SkillsSection />
       <AboutSection education={education} research={research} certifications={certifications} experience={experience} onMouseMove={handleMouseMove} />
       <ContactSection contact={contact} />
-      <SiteFooter name={person.name} />
+      <SiteFooter
+        person={person}
+        contact={contact}
+        onScrollTo={scrollTo}
+        onOpenAbout={() => setShowAboutModal(true)}
+      />
       <AboutModal person={person} open={showAboutModal} onClose={() => setShowAboutModal(false)} />
     </div>
   );

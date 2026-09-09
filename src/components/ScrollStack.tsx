@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import type { ReactNode } from 'react';
 import './ScrollStack.css';
 
@@ -27,6 +27,8 @@ interface ScrollStackProps {
   onStackComplete?: () => void;
 }
 
+const MOBILE_BREAKPOINT = 1024;
+
 const ScrollStack = ({
   children,
   className = '',
@@ -47,6 +49,19 @@ const ScrollStack = ({
   const endOffsetRef = useRef<number>(0);
   const isUpdatingRef = useRef(false);
 
+  // Track whether we're on mobile/tablet
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= MOBILE_BREAKPOINT : false
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener('change', onChange);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
     if (scrollTop > end) return 1;
@@ -60,7 +75,6 @@ const ScrollStack = ({
     return parseFloat(value as string);
   }, []);
 
-  // Measure and cache all layout offsets once, preventing layout thrashing during scroll
   const measureOffsets = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
@@ -148,7 +162,10 @@ const ScrollStack = ({
     });
   }, [updateCardTransforms]);
 
+  // Only run scroll-driven transforms on desktop
   useEffect(() => {
+    if (isMobile) return; // Skip all JS transforms on mobile/tablet
+
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
@@ -181,14 +198,23 @@ const ScrollStack = ({
       }
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
+      // Reset transforms so switching back to mobile doesn't leave stale values
+      cards.forEach((card) => {
+        card.style.transform = '';
+        card.style.willChange = '';
+        card.style.marginBottom = '';
+      });
       stackCompletedRef.current = false;
       cardsRef.current = [];
       isUpdatingRef.current = false;
     };
-  }, [itemDistance, measureOffsets, updateCardTransforms, handleScroll]);
+  }, [isMobile, itemDistance, measureOffsets, updateCardTransforms, handleScroll]);
 
   return (
-    <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef}>
+    <div
+      className={`scroll-stack-scroller ${isMobile ? 'scroll-stack-static' : ''} ${className}`.trim()}
+      ref={scrollerRef}
+    >
       <div className="scroll-stack-inner">
         {children}
         <div className="scroll-stack-end" />

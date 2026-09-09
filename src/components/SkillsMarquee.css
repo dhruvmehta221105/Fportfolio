@@ -1,0 +1,145 @@
+/* Skills Marquee / Dynamic Horizontal Index */
+
+.skills-index-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills-index-caption {
+  font-family: var(--font-mono, 'Fira Code', monospace);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted, #888888);
+  margin-bottom: 2rem;
+  max-width: 650px;
+  letter-spacing: -0.01em;
+  opacity: 0.85;
+}
+
+.skills-marquee-board {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  overflow: hidden;
+  /* Left and right fade mask */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.skills-marquee-row {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  padding: 1.75rem 0;
+  display: flex;
+  user-select: none;
+}
+
+.skills-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 3.5rem;
+  padding-right: 3.5rem;
+  will-change: transform;
+}
+
+.skills-marquee-track.scroll-left {
+  animation: skillsMarqueeLeft var(--speed, 35s) linear infinite;
+}
+
+.skills-marquee-track.scroll-right {
+  animation: skillsMarqueeRight var(--speed, 35s) linear infinite;
+}
+
+/* Pause on hover */
+.skills-marquee-row:hover .skills-marquee-track {
+  animation-play-state: paused;
+}
+
+.skills-marquee-item {
+  font-family: var(--font-mono, 'Fira Code', monospace);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--foreground, #e5e7eb);
+  opacity: 0.75;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.skills-marquee-item:hover {
+  opacity: 1;
+  color: var(--foreground, #ffffff);
+  transform: translateY(-2px) scale(1.04);
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+/* Keyframes for seamless infinite loop */
+@keyframes skillsMarqueeLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes skillsMarqueeRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .skills-index-caption {
+    display: none;
+  }
+  .skills-marquee-item {
+    font-size: 1.5rem;
+  }
+  .skills-marquee-row {
+    padding: 1.4rem 0;
+  }
+  .skills-marquee-track {
+    gap: 2.75rem;
+    padding-right: 2.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .skills-marquee-item {
+    font-size: 1.25rem;
+  }
+  .skills-marquee-row {
+    padding: 1.1rem 0;
+  }
+  .skills-marquee-track {
+    gap: 2rem;
+    padding-right: 2rem;
+  }
+}

@@ -3,10 +3,10 @@ export type Project = {
   title: string;
   shortTitle: string;
   image: string;
-  category: string;
+  description: string;
   github: string;
   tech: string[];
-  bullets: string[];
+  highlights: string[];
 };
 
 export type Experience = {
@@ -75,30 +75,28 @@ export const portfolioData = {
 ],  projects: [
     {
       id: 1,
-      title: 'Kavach - AI Security Platform',
+      title: 'Kavach',
       shortTitle: 'Kavach',
       image: '/kavach.jpeg',
-      category: 'AI Security Platform',
+      description: 'Kavach (AI Security Gateway) is a REST-based LLM security layer that intercepts AI requests, detects prompt injection, jailbreaks, malicious prompts, and sensitive-data leakage, and enforces security policies across the pre-LLM and post-LLM inference pipeline. Built with Node.js/Express.js, MongoDB, and Groq LLM inference with asynchronous request processing and automated security testing.',
       github: 'https://github.com/dhruvmehta221105/Kavach',
-      tech: ['Next.js', 'React.js', 'Node.js', 'Express.js', 'MongoDB', 'Groq'],
-      bullets: [
-        'Developed an AI-powered security platform to detect prompt injection, jailbreak attempts, sensitive data leakage, and malicious prompts targeting large language models.',
-        'Implemented prompt risk scoring and threat classification for real-time AI threat assessment.',
-        'Built secure authentication, scan history, and an analytics dashboard for monitoring security findings.'
+      tech: ['LLM Security', 'AI Gateway', 'Prompt Injection', 'Jailbreak Detection', 'DLP', 'Threat Detection', 'Policy Enforcement', 'REST API', 'Node.js', 'Express.js', 'MongoDB', 'Groq'],
+      highlights: [
+        '2-stage request inspection pipeline',
+        '2-phase security policy enforcement'
       ]
     },
     {
       id: 0,
-      title: 'InterviewX - Interview Prep Platform',
+      title: 'InterviewX — Interview Orchestration System',
       shortTitle: 'InterviewX',
       image: '/interviewx.jpeg',
-      category: 'AI-Powered Interview Platform',
+      description: 'InterviewX is an LLM-powered interview orchestration system for dynamic technical question generation, adaptive questioning, and candidate response evaluation. It combines OpenAI inference, Whisper speech-to-text, voice/text interaction, session management, and AI scoring through a Node.js/Express.js REST API with MongoDB and React.js.',
       github: 'https://github.com/dhruvmehta221105/InterviewX',
-      tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'OpenAI API', 'Whisper'],
-      bullets: [
-        'Built an AI-powered mock interview platform using the OpenAI API to simulate technical interviews with dynamic question generation.',
-        'Implemented secure authentication and interview session management for personalized practice workflows.',
-        'Added transcript generation with Whisper and AI-based performance evaluation with personalized feedback.'
+      tech: ['LLM', 'Adaptive Questioning', 'OpenAI', 'Whisper STT', 'Evaluation Pipeline', 'REST API', 'Node.js', 'MongoDB', 'React.js'],
+      highlights: [
+        'Multi-stage AI interview pipeline',
+        'Voice + text interaction'
       ]
     }
   ] satisfies Project[],

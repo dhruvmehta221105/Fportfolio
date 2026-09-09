@@ -36,11 +36,19 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
               <div className="project-list-content">
                 <div className="project-list-heading">
                   <span className="project-list-number">{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{project.shortTitle}</h3>
+                  <h3>{project.title}</h3>
                 </div>
-                <p className="project-list-category">{project.category}</p>
-                <p className="project-list-description">{project.bullets[0]}</p>
-                <p className="project-list-tech">{project.tech.join(' / ')}</p>
+                <p className="project-list-description">{project.description}</p>
+                <div className="project-list-tags">
+                  {project.tech.map((tag) => (
+                    <span key={tag} className="project-list-tag">{tag}</span>
+                  ))}
+                </div>
+                <ul className="project-list-highlights">
+                  {project.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
                 <a href={project.github} target="_blank" rel="noreferrer" className="project-list-link">
                   View project <span aria-hidden="true">-&gt;</span>
                 </a>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Lenis from 'lenis';
 import AboutModal from './components/AboutModal';
 import AboutSection from './components/AboutSection';
@@ -19,27 +19,33 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const scrollRafRef = useRef<number | null>(null);
+  const sectionsCacheRef = useRef<{ id: string; top: number; bottom: number }[]>([]);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  // Optimized mouse glow position without forced getBoundingClientRect layout thrashing
+  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     const card = event.currentTarget;
     const rect = card.getBoundingClientRect();
     card.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`);
     card.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);
-  };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = showAboutModal ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [showAboutModal]);
 
+  // Silky smooth Lenis configuration
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       touchMultiplier: 1.5,
       wheelMultiplier: 1,
-      lerp: 0.08,
+      lerp: 0.1,
     });
 
     let animationFrame = 0;
@@ -55,18 +61,50 @@ export default function App() {
     };
   }, []);
 
+  // Cache section positions and throttle active section detection
   useEffect(() => {
+    const updateSectionCache = () => {
+      const sections = Array.from(document.querySelectorAll('section[id]')) as HTMLElement[];
+      const scrollY = window.scrollY;
+      sectionsCacheRef.current = sections.map((sec) => {
+        const rect = sec.getBoundingClientRect();
+        const top = rect.top + scrollY;
+        return {
+          id: sec.id,
+          top,
+          bottom: top + rect.height,
+        };
+      });
+    };
+
+    updateSectionCache();
+    window.addEventListener('resize', updateSectionCache, { passive: true });
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120;
-      document.querySelectorAll('section[id]').forEach((section) => {
-        const element = section as HTMLElement;
-        if (scrollPosition >= element.offsetTop && scrollPosition < element.offsetTop + element.offsetHeight) {
-          setActiveSection(element.id);
+      if (scrollRafRef.current !== null) return;
+
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        const scrollPosition = window.scrollY + 140;
+        const sections = sectionsCacheRef.current;
+
+        for (let i = 0; i < sections.length; i++) {
+          const { id, top, bottom } = sections[i];
+          if (scrollPosition >= top && scrollPosition < bottom) {
+            setActiveSection(id);
+            break;
+          }
         }
       });
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('resize', updateSectionCache);
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    };
   }, []);
 
   const scrollTo = (id: string) => {
@@ -80,13 +118,31 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Navbar person={person} navigation={navigation} activeSection={activeSection} mobileMenuOpen={mobileMenuOpen} onScrollTo={scrollTo} onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)} />
+      <Navbar
+        person={person}
+        navigation={navigation}
+        activeSection={activeSection}
+        mobileMenuOpen={mobileMenuOpen}
+        onScrollTo={scrollTo}
+        onToggleMobileMenu={() => setMobileMenuOpen((open) => !open)}
+      />
       <HeroSection person={person} onScrollTo={scrollTo} />
       <Ticker person={person} />
       <IntroSection person={person} skills={skills} onOpenAbout={() => setShowAboutModal(true)} />
-      <ProjectsSection projects={projects} activeProjectIndex={activeProjectIndex} onProjectChange={setActiveProjectIndex} onMouseMove={handleMouseMove} />
+      <ProjectsSection
+        projects={projects}
+        activeProjectIndex={activeProjectIndex}
+        onProjectChange={setActiveProjectIndex}
+        onMouseMove={handleMouseMove}
+      />
       <SkillsSection />
-      <AboutSection education={education} research={research} certifications={certifications} experience={experience} onMouseMove={handleMouseMove} />
+      <AboutSection
+        education={education}
+        research={research}
+        certifications={certifications}
+        experience={experience}
+        onMouseMove={handleMouseMove}
+      />
       <ContactSection contact={contact} />
       <SiteFooter
         person={person}

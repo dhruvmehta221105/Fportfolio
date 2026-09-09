@@ -12,7 +12,7 @@ const dist = (a: MousePos, b: MousePos): number => {
 };
 
 const getAttr = (distance: number, maxDist: number, minVal: number, maxVal: number): number => {
-  const val = maxVal - Math.abs((maxVal * distance) / maxDist);
+  const val = maxVal - Math.abs((maxVal * distance) / (maxDist || 1));
   return Math.max(minVal, val + minVal);
 };
 
@@ -47,28 +47,28 @@ export default function TextPressure({
   text = 'Compressa',
   fontFamily = 'Roboto Flex',
   fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap',
-
   width = true,
   weight = true,
   italic = true,
   alpha = false,
-
   flex = true,
   stroke = false,
   scale = false,
-
   textColor = '#FFFFFF',
   strokeColor = '#FF0000',
   className = '',
-
-  minFontSize = 24
+  minFontSize = 24,
 }: TextPressureProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const spansRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const charCentersRef = useRef<{ x: number; y: number }[]>([]);
+  const titleRectRef = useRef<{ width: number; maxDist: number }>({ width: 0, maxDist: 0 });
 
   const mouseRef = useRef<MousePos>({ x: 0, y: 0 });
   const cursorRef = useRef<MousePos>({ x: 0, y: 0 });
+  const isVisibleRef = useRef(false);
+  const rafIdRef = useRef<number | null>(null);
 
   const [fontSize, setFontSize] = useState<number>(minFontSize);
   const [scaleY, setScaleY] = useState<number>(1);
@@ -76,39 +76,28 @@ export default function TextPressure({
 
   const chars = useMemo(() => text.split(''), [text]);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      cursorRef.current.x = e.clientX;
-      cursorRef.current.y = e.clientY;
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      const t = e.touches[0];
-      cursorRef.current.x = t.clientX;
-      cursorRef.current.y = t.clientY;
+  const updateCharPositions = useCallback(() => {
+    if (!titleRef.current) return;
+    const titleRect = titleRef.current.getBoundingClientRect();
+    titleRectRef.current = {
+      width: titleRect.width,
+      maxDist: titleRect.width / 2,
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-    if (containerRef.current) {
-      const { left, top, width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
-      mouseRef.current.x = left + containerW / 2;
-      mouseRef.current.y = top + containerH / 2;
-      cursorRef.current.x = mouseRef.current.x;
-      cursorRef.current.y = mouseRef.current.y;
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
+    charCentersRef.current = spansRef.current.map((span) => {
+      if (!span) return { x: 0, y: 0 };
+      const rect = span.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      };
+    });
   }, []);
 
   const setSize = useCallback(() => {
     if (!containerRef.current || !titleRef.current) return;
 
     const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
-
     let newFontSize = containerW / (chars.length * 0.65);
     newFontSize = Math.max(newFontSize, minFontSize);
 
@@ -125,8 +114,9 @@ export default function TextPressure({
         setScaleY(yRatio);
         setLineHeight(yRatio);
       }
+      updateCharPositions();
     });
-  }, [chars.length, minFontSize, scale]);
+  }, [chars.length, minFontSize, scale, updateCharPositions]);
 
   useEffect(() => {
     const debouncedSetSize = debounce(setSize, 100);
@@ -136,64 +126,121 @@ export default function TextPressure({
   }, [setSize]);
 
   useEffect(() => {
-    let rafId: number;
-    const animate = () => {
-      mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15;
-      mouseRef.current.y += (cursorRef.current.y - mouseRef.current.y) / 15;
+    const container = containerRef.current;
+    if (!container) return;
 
-      if (titleRef.current) {
-        const titleRect = titleRef.current.getBoundingClientRect();
-        const maxDist = titleRect.width / 2;
-
-        spansRef.current.forEach((span) => {
-          if (!span) return;
-
-          const rect = span.getBoundingClientRect();
-          const charCenter = {
-            x: rect.x + rect.width / 2,
-            y: rect.y + rect.height / 2
-          };
-
-          const d = dist(mouseRef.current, charCenter);
-
-          const wdth = width ? Math.floor(getAttr(d, maxDist, 5, 200)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 100, 900)) : 400;
-          const italVal = italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : '0';
-          const alphaVal = alpha ? getAttr(d, maxDist, 0, 1).toFixed(2) : '1';
-
-          const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
-
-          if (span.style.fontVariationSettings !== newFontVariationSettings) {
-            span.style.fontVariationSettings = newFontVariationSettings;
-          }
-          if (alpha && span.style.opacity !== alphaVal) {
-            span.style.opacity = alphaVal;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+          if (entry.isIntersecting) {
+            updateCharPositions();
+            startLoop();
+          } else {
+            stopLoop();
           }
         });
-      }
+      },
+      { rootMargin: '100px 0px' }
+    );
 
-      rafId = requestAnimationFrame(animate);
+    observer.observe(container);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      cursorRef.current.x = e.clientX;
+      cursorRef.current.y = e.clientY;
+      if (isVisibleRef.current) startLoop();
     };
 
-    animate();
-    return () => cancelAnimationFrame(rafId);
-  }, [width, weight, italic, alpha]);
+    const handleTouchMove = (e: TouchEvent) => {
+      const t = e.touches[0];
+      cursorRef.current.x = t.clientX;
+      cursorRef.current.y = t.clientY;
+      if (isVisibleRef.current) startLoop();
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    function renderLoop() {
+      if (!isVisibleRef.current) return;
+
+      const dx = cursorRef.current.x - mouseRef.current.x;
+      const dy = cursorRef.current.y - mouseRef.current.y;
+
+      mouseRef.current.x += dx * 0.12;
+      mouseRef.current.y += dy * 0.12;
+
+      const maxDist = titleRectRef.current.maxDist || 300;
+      const centers = charCentersRef.current;
+
+      spansRef.current.forEach((span, i) => {
+        if (!span) return;
+        const charCenter = centers[i];
+        if (!charCenter) return;
+
+        const d = dist(mouseRef.current, charCenter);
+
+        const wdth = width ? Math.floor(getAttr(d, maxDist, 5, 200)) : 100;
+        const wght = weight ? Math.floor(getAttr(d, maxDist, 100, 900)) : 400;
+        const italVal = italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : '0';
+        const alphaVal = alpha ? getAttr(d, maxDist, 0, 1).toFixed(2) : '1';
+
+        const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+
+        if (span.style.fontVariationSettings !== newFontVariationSettings) {
+          span.style.fontVariationSettings = newFontVariationSettings;
+        }
+        if (alpha && span.style.opacity !== alphaVal) {
+          span.style.opacity = alphaVal;
+        }
+      });
+
+      // If mouse is settled, idle the RAF loop
+      if (Math.abs(dx) < 0.2 && Math.abs(dy) < 0.2) {
+        rafIdRef.current = null;
+        return;
+      }
+
+      rafIdRef.current = requestAnimationFrame(renderLoop);
+    }
+
+    function startLoop() {
+      if (rafIdRef.current === null && isVisibleRef.current) {
+        rafIdRef.current = requestAnimationFrame(renderLoop);
+      }
+    }
+
+    function stopLoop() {
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+    }
+
+    return () => {
+      observer.disconnect();
+      stopLoop();
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [width, weight, italic, alpha, updateCharPositions]);
 
   const styleElement = useMemo(() => {
     return (
       <style>{`
         @import url('${fontUrl}');
 
-        .flex {
+        .tp-flex {
           display: flex;
           justify-content: space-between;
         }
 
-        .stroke span {
+        .tp-stroke span {
           position: relative;
           color: ${textColor};
         }
-        .stroke span::after {
+        .tp-stroke span::after {
           content: attr(data-char);
           position: absolute;
           left: 0;
@@ -211,7 +258,7 @@ export default function TextPressure({
     );
   }, [fontUrl, textColor, strokeColor]);
 
-  const dynamicClassName = [className, flex ? 'flex' : '', stroke ? 'stroke' : ''].filter(Boolean).join(' ');
+  const dynamicClassName = [className, flex ? 'tp-flex' : '', stroke ? 'tp-stroke' : ''].filter(Boolean).join(' ');
 
   return (
     <div
@@ -221,7 +268,7 @@ export default function TextPressure({
         width: '100%',
         height: '100%',
         background: 'transparent',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       {styleElement}
@@ -231,7 +278,7 @@ export default function TextPressure({
         style={{
           fontFamily,
           textTransform: 'uppercase',
-          fontSize: fontSize,
+          fontSize,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center top',
@@ -240,17 +287,20 @@ export default function TextPressure({
           userSelect: 'none',
           whiteSpace: 'nowrap',
           fontWeight: 100,
-          width: '100%'
+          width: '100%',
         }}
       >
         {chars.map((char, i) => (
           <span
             key={i}
-            ref={(el) => { spansRef.current[i] = el; }}
+            ref={(el) => {
+              spansRef.current[i] = el;
+            }}
             data-char={char}
             style={{
               display: 'inline-block',
-              color: stroke ? undefined : textColor
+              color: stroke ? undefined : textColor,
+              willChange: 'font-variation-settings',
             }}
           >
             {char}

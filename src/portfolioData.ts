@@ -88,7 +88,7 @@ export const portfolioData = {
     },
     {
       id: 0,
-      title: 'InterviewX — Interview Orchestration System',
+      title: 'InterviewX',
       shortTitle: 'InterviewX',
       image: '/interviewx.jpeg',
       description: 'InterviewX is an LLM-powered interview orchestration system for dynamic technical question generation, adaptive questioning, and candidate response evaluation. It combines OpenAI inference, Whisper speech-to-text, voice/text interaction, session management, and AI scoring through a Node.js/Express.js REST API with MongoDB and React.js.',

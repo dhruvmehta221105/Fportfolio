@@ -75,10 +75,10 @@ export const portfolioData = {
 ],  projects: [
     {
       id: 1,
-      title: 'Kavach',
-      shortTitle: 'Kavach',
+      title: 'Visor',
+      shortTitle: 'Visor',
       image: '/kavach.jpeg',
-      description: 'Kavach (AI Security Gateway) is a REST-based LLM security layer that intercepts AI requests, detects prompt injection, jailbreaks, malicious prompts, and sensitive-data leakage, and enforces security policies across the pre-LLM and post-LLM inference pipeline. Built with Node.js/Express.js, MongoDB, and Groq LLM inference with asynchronous request processing and automated security testing.',
+      description: 'Visor (AI Security Gateway) is a REST-based LLM security layer that intercepts AI requests, detects prompt injection, jailbreaks, malicious prompts, and sensitive-data leakage, and enforces security policies across the pre-LLM and post-LLM inference pipeline. Built with Node.js/Express.js, MongoDB, and Groq LLM inference with asynchronous request processing and automated security testing.',
       github: 'https://github.com/dhruvmehta221105/Kavach',
       tech: ['LLM Security', 'AI Gateway', 'Prompt Injection', 'Jailbreak Detection', 'DLP', 'Threat Detection', 'Policy Enforcement', 'REST API', 'Node.js', 'Express.js', 'MongoDB', 'Groq'],
       highlights: [

@@ -19,15 +19,16 @@ export default function Navbar({ person, navigation, activeSection, mobileMenuOp
     <>
       <header className="header">
         <div className="container header-container">
-          <div
+          <a
+            href="#home"
             onClick={() => onScrollTo('home')}
             className="logo"
             style={{ cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
           >
             <span style={{ fontWeight: 300, fontSize: '18px' }}>&larr;</span> {person.logoName}<span>.</span>
-          </div>
+          </a>
 
-          <nav className="nav-links">
+          <nav className="nav-links" aria-label="Primary navigation">
             {links.map(({ item, label }) => (
               <a key={item} href={`#${item}`} onClick={(event) => { event.preventDefault(); onScrollTo(item); }} className={`nav-link ${activeSection === item ? 'active' : ''}`} style={{ textTransform: 'capitalize' }}>
                 {label}
@@ -36,14 +37,14 @@ export default function Navbar({ person, navigation, activeSection, mobileMenuOp
             <a href={person.resume.url} download={person.resume.filename} className="btn-header-email">Download Resume</a>
           </nav>
 
-          <button className="mobile-menu-btn" onClick={onToggleMobileMenu} aria-label="Toggle menu">
+          <button className="mobile-menu-btn" onClick={onToggleMobileMenu} aria-label="Toggle menu" aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </header>
 
       {mobileMenuOpen && (
-        <nav className="mobile-nav">
+        <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation">
           {links.map(({ item, label }) => (
             <a key={item} href={`#${item}`} onClick={(event) => { event.preventDefault(); onScrollTo(item); }} className={`nav-link ${activeSection === item ? 'active' : ''}`} style={{ textTransform: 'capitalize', padding: '8px 0', fontSize: '16px' }}>
               {label}

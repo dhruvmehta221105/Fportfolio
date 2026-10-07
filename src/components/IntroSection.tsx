@@ -17,7 +17,7 @@ export default function IntroSection({ person, skills, onOpenAbout }: IntroSecti
         <div className="intro-content-wrapper">
           <div className="intro-left-col">
             <div className="intro-available-tag"><span className="sparkle-icon">✦</span><span className="tag-text">AVAILABLE FOR WORK</span><span className="cursor-blink">|</span></div>
-            <div className="intro-title-group"><h1 className="intro-title-black">My</h1><h1 className="intro-title-gray">Expertise</h1></div>
+            <div className="intro-title-group"><h2 className="intro-title-black">My</h2><span className="intro-title-gray">Expertise</span></div>
             <p className="intro-desc">{person.intro}</p>
             <div className="intro-badges">{skills.map((skill) => <span key={skill} className="badge-light-pill">{skill}</span>)}</div>
             <div className="intro-actions"><button onClick={onOpenAbout} className="btn-solid-light">About Me</button></div>

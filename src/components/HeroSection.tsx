@@ -66,7 +66,8 @@ export default function HeroSection({
           <div className="hero-stack-container">
 
             <h1 className="hero-text-row text-solid">
-              {person.headline[0]}
+              <span>{person.headline[0]}</span>
+              <span>{person.headline[1]}</span>
             </h1>
 
             <div className="hero-avatar-wrapper">
@@ -74,19 +75,15 @@ export default function HeroSection({
                 src={person.avatar}
                 alt={person.name}
                 className="hero-avatar-img"
+                width={6250}
+                height={6250}
+                fetchPriority="high"
+                decoding="async"
                 onError={(event) => {
                   event.currentTarget.src = person.fallbackAvatar;
                 }}
               />
             </div>
-
-            <h1 className="hero-text-row text-solid">
-              {person.headline[1]}
-            </h1>
-
-            <h1 className="hero-text-row text-solid">
-              {person.headline[2]}
-            </h1>
 
           </div>
 

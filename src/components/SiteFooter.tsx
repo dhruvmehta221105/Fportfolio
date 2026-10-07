@@ -169,9 +169,9 @@ export default function SiteFooter({
         {/* Center / Bottom Big Brand Typography */}
         <div className="modern-footer-brand-container">
           <div className="modern-footer-brand-backdrop-circle" aria-hidden="true" />
-          <h1 className="modern-footer-big-name" aria-label="Dhruv">
+          <div className="modern-footer-big-name" role="img" aria-label="Dhruv">
             DHRUV<span className="brand-dot">•</span>
-          </h1>
+          </div>
         </div>
 
         {/* Bottom Bar */}

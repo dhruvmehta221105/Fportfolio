@@ -1091,6 +1091,10 @@ a {
   font-family: var(--font-heading);
   font-size: 9.5vw;
   line-height: 0.9;
+ }
+
+ .hero-text-row span {
+  display: block;
   font-weight: 900;
   letter-spacing: 0.02em;
   text-transform: uppercase;

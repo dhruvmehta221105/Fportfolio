@@ -20,7 +20,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
         <div className="contact-container">
           <p className="contact-text">{contact.message}</p>
           <div className="contact-links"><a href={`mailto:${contact.email}`} className="btn-primary" style={{ gap: '8px' }}><Mail size={16} /> {contact.email}</a><a href={contact.phoneHref} className="btn-secondary" style={{ gap: '8px' }}><Phone size={16} /> {contact.phone}</a></div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '48px' }}><a href={contact.github} target="_blank" rel="noreferrer" className="outline-icon-button" aria-label="GitHub"><Github size={20} /></a><a href={contact.linkedin} target="_blank" rel="noreferrer" className="outline-icon-button" aria-label="LinkedIn"><Linkedin size={20} /></a></div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '48px' }}><a href={contact.github} target="_blank" rel="noopener noreferrer" className="outline-icon-button" aria-label="GitHub"><Github size={20} aria-hidden="true" /></a><a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="outline-icon-button" aria-label="LinkedIn"><Linkedin size={20} aria-hidden="true" /></a></div>
         </div>
       </div>
     </section>

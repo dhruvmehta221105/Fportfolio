@@ -272,7 +272,7 @@ export default function TextPressure({
       }}
     >
       {styleElement}
-      <h1
+      <h2
         ref={titleRef}
         className={`text-pressure-title ${dynamicClassName}`}
         style={{
@@ -306,7 +306,7 @@ export default function TextPressure({
             {char}
           </span>
         ))}
-      </h1>
+      </h2>
     </div>
   );
 }

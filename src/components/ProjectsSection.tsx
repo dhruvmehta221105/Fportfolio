@@ -29,6 +29,10 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                 <img
                   src={project.image}
                   alt={`${project.shortTitle} project preview`}
+                  width={project.id === 1 ? 1900 : 1470}
+                  height={project.id === 1 ? 877 : 826}
+                  loading="lazy"
+                  decoding="async"
                   onError={(event) => { event.currentTarget.style.display = 'none'; }}
                 />
               </div>

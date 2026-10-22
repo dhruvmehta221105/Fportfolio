@@ -1,6 +1,7 @@
 import React from 'react';
 import type { portfolioData } from '../portfolioData';
 import { ArrowUpRight } from 'lucide-react';
+import TechText from './TechText';
 
 type SiteFooterProps = {
   person: typeof portfolioData.person;
@@ -166,11 +167,38 @@ export default function SiteFooter({
           </div>
         </div>
 
-        {/* Center / Bottom Big Brand Typography */}
+{/* Center / Bottom Big Brand Typography */}
         <div className="modern-footer-brand-container">
           <div className="modern-footer-brand-backdrop-circle" aria-hidden="true" />
-          <div className="modern-footer-big-name" role="img" aria-label="Dhruv">
-            DHRUV<span className="brand-dot">•</span>
+          <div className="modern-footer-big-name" role="img" aria-label="Dhruv" style={{ height: '320px', width: '100%' }}>
+            <TechText
+              text="DHRUV"
+              fontWeight={700}
+              fontSize={280}
+              reveal="letter"
+              dashLength={4}
+              dashGap={2}
+              specks={20}
+              intro="none"
+              introDuration={2}
+              clickKick
+              guides={false}
+              fontFamily=""
+              letterSpacing={-0.02}
+              accentColor="currentColor"
+              reach={220}
+              softness={0.6}
+              lineStyle="dashed"
+              strokeWidth={2}
+              speed={1}
+              bounce={0.3}
+              selection
+              labels={false}
+              draggable
+              sweep
+              color="currentColor"
+              align="center"
+/>
           </div>
         </div>
 

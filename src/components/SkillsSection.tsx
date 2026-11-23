@@ -1,6 +1,6 @@
 import DotField from './DotField';
+import ParticleText from './ParticleText';
 import SkillsMarquee from './SkillsMarquee';
-import TextPressure from './TextPressure';
 
 export default function SkillsSection() {
   return (
@@ -20,16 +20,22 @@ export default function SkillsSection() {
       </div>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="skills-title-wrapper">
-          <TextPressure
+          <ParticleText
             text="TECHNICAL SKILLS"
-            flex={true}
-            alpha={false}
-            stroke={false}
-            width={true}
-            weight={true}
-            italic={true}
-            textColor="var(--foreground)"
-            minFontSize={28}
+            particleSize={2.2}
+            density={4}
+            color="#050505"
+            highlightColor="#12452f"
+            scatter={190}
+            gatherDuration={1600}
+            clickBurst
+            burstStrength={1}
+            pointerRepel={42}
+            repelRadius={120}
+            idleDrift={0.8}
+            fontSize="clamp(3.5rem, 13vw, 9rem)"
+            fontWeight={800}
+            fontFamily="inherit"
           />
         </div>
         <SkillsMarquee />

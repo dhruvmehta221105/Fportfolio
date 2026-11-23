@@ -88,14 +88,15 @@ export const portfolioData = {
     },
     {
       id: 0,
-      title: 'InterviewX',
-      shortTitle: 'InterviewX',
-      image: '/interviewx.jpeg',
-      description: 'InterviewX is an LLM-powered interview orchestration system for dynamic technical question generation, adaptive questioning, and candidate response evaluation. It combines OpenAI inference, Whisper speech-to-text, voice/text interaction, session management, and AI scoring through a Node.js/Express.js REST API with MongoDB and React.js.',
-      github: 'https://github.com/dhruvmehta221105/InterviewX',
-      tech: ['LLM', 'Adaptive Questioning', 'OpenAI', 'Whisper STT', 'Evaluation Pipeline', 'REST API', 'Node.js', 'MongoDB', 'React.js'],
+      title: 'GitHired',
+      shortTitle: 'GitHired',
+      image: '/githired.png',
+      description: 'GitHired is an AI-powered interview preparation platform for realistic mock interviews, company-wise DSA practice, and actionable candidate feedback. It combines adaptive technical questioning, voice and text interaction, and KiKo, a personalised interview-preparation chatbot, through a Node.js/Express.js REST API with MongoDB and React.js.',
+      github: 'https://github.com/dhruvmehta221105/GitHired',
+      tech: ['AI Interviews', 'Company-wise DSA', 'KiKo Chatbot', 'Adaptive Questioning', 'OpenAI', 'Whisper STT', 'Evaluation Pipeline', 'REST API', 'Node.js', 'MongoDB', 'React.js'],
       highlights: [
-        'Multi-stage AI interview pipeline',
+        'Company-specific DSA question practice',
+        'KiKo personalised chatbot',
         'Voice + text interaction'
       ]
     }

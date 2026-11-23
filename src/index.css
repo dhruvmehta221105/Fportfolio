@@ -2579,6 +2579,289 @@ a {
   overflow: hidden;
 }
 
+.about-showcase-section {
+  position: relative;
+  height: 420vh;
+  background: #0b0b0c;
+  color: #f8fafc;
+}
+
+.about-showcase-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.about-showcase-wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #1f6b46;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.about-showcase-container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 52px);
+  width: 100%;
+  max-width: 1440px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.about-showcase-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.section-kicker {
+  margin-bottom: 16px;
+  color: #72b996;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.about-showcase-header .section-title {
+  color: #f8fafc;
+}
+
+.about-showcase-header .section-title span {
+  color: #72b996;
+}
+
+.about-showcase-instruction {
+  max-width: 260px;
+  margin-bottom: 4px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.about-showcase-cards {
+  position: relative;
+  width: 100%;
+  min-height: clamp(560px, 64vh, 700px);
+  overflow: hidden;
+}
+
+.about-showcase-track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(24px, 4vw, 64px);
+  height: 100%;
+  will-change: transform;
+}
+
+.about-showcase-slide {
+  flex: 0 0 min(1120px, calc(100% - 96px));
+  min-width: 0;
+  height: 100%;
+}
+
+.about-showcase-card {
+  position: relative;
+  height: clamp(560px, 64vh, 700px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4vw, 52px);
+  border: 1px solid rgba(114, 185, 150, 0.24);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #18201d, #101513);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
+  animation: aboutCardReveal 480ms var(--ease-smooth);
+}
+
+.about-showcase-card::after {
+  background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(114, 185, 150, 0.12), transparent 50%) !important;
+}
+
+.about-showcase-card-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.about-showcase-card-title h3 {
+  color: #f8fafc;
+  font-size: clamp(22px, 3vw, 34px);
+}
+
+.about-showcase-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 14px;
+  color: #0b0b0c;
+  background: #72b996;
+}
+
+.about-showcase-counter {
+  margin-left: auto;
+  color: #72b996;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.about-showcase-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  min-height: 0;
+  overflow: visible;
+  padding-top: 28px;
+  padding-right: 8px;
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.about-showcase-card-content h3 {
+  color: #f8fafc;
+  font-size: clamp(22px, 3vw, 36px);
+}
+
+.about-showcase-eyebrow,
+.about-showcase-meta,
+.about-showcase-date {
+  color: #72b996;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.about-showcase-date {
+  white-space: nowrap;
+}
+
+.about-showcase-experience-list,
+.about-showcase-certifications {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-height: 54vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.about-showcase-experience,
+.about-showcase-certifications article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-showcase-experience h3,
+.about-showcase-certifications h3 {
+  color: #f8fafc;
+  font-size: 17px;
+}
+
+.about-showcase-experience > p:not(.about-showcase-date),
+.about-showcase-certifications article > p:not(.about-showcase-meta) {
+  grid-column: 1 / -1;
+}
+
+.about-showcase-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  height: 3px;
+  transform-origin: left;
+  background: #72b996;
+}
+
+@keyframes aboutCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-showcase-section {
+    height: auto;
+  }
+
+  .about-showcase-sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .about-showcase-container {
+    gap: 28px;
+    padding-top: 80px;
+    padding-bottom: 48px;
+  }
+
+  .about-showcase-header {
+    display: block;
+  }
+
+  .about-showcase-instruction {
+    display: none;
+  }
+
+  .about-showcase-cards {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .about-showcase-track {
+    flex-direction: column;
+    gap: 20px;
+    transform: none !important;
+  }
+
+  .about-showcase-slide {
+    flex-basis: 100%;
+    height: auto;
+  }
+
+  .about-showcase-card {
+    height: auto;
+    min-height: 360px;
+    padding: 22px;
+  }
+
+  .about-showcase-card-content {
+    overflow: visible;
+  }
+
+  .about-showcase-wipe,
+  .about-showcase-progress {
+    display: none;
+  }
+}
+
 @media (min-width: 480px) {
   .skills-title-wrapper {
     height: 100px;

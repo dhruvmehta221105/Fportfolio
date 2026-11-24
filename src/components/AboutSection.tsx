@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Award, BriefcaseBusiness, ExternalLink, GraduationCap, ShieldCheck } from 'lucide-react';
+import BlurText from './BlurText';
 import type { portfolioData } from '../portfolioData';
 
 type AboutSectionProps = {
@@ -147,7 +148,17 @@ export default function AboutSection({
   return (
     <section ref={sectionRef} id="about" className="about-showcase-section">
       <div className="about-showcase-sticky">
-        <div className="about-showcase-wipe" style={{ transform: `translateX(${-wipeProgress * 100}%)` }} />
+        <div className="about-showcase-wipe" style={{ transform: `translateX(${-wipeProgress * 100}%)` }}>
+          <BlurText
+            text="The path so far"
+            className="about-showcase-wipe-title"
+            active={progress > 0}
+            delay={200}
+            stepDuration={0.35}
+            blur={10}
+            distance={50}
+          />
+        </div>
         <div className="container about-showcase-container">
           <div className="about-showcase-header">
             <p className="section-kicker">The path so far</p>

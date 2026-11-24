@@ -2588,8 +2588,8 @@ a {
 
 .about-showcase-sticky {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 60px;
+  height: calc(100vh - 60px);
   min-height: 640px;
   overflow: hidden;
   isolation: isolate;
@@ -2599,9 +2599,45 @@ a {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: #1f6b46;
+  background: #f8fafc;
   pointer-events: none;
   will-change: transform;
+}
+
+.about-showcase-wipe::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #0b0b0c;
+  white-space: nowrap;
+}
+
+.about-showcase-wipe-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: max-content;
+  max-width: 90%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  color: #0b0b0c;
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 8vw, 104px);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  text-align: center;
+}
+
+.about-showcase-wipe::after {
+  bottom: clamp(32px, 8vh, 80px);
+  content: "EDUCATION  /  EXPERIENCE";
+  padding-top: 14px;
+  border-top: 1px solid rgba(11, 11, 12, 0.22);
+  color: #737373;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
 }
 
 .about-showcase-container {
@@ -2614,8 +2650,8 @@ a {
   gap: clamp(28px, 5vh, 52px);
   width: 100%;
   max-width: 1440px;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .about-showcase-header {
@@ -2636,12 +2672,16 @@ a {
   text-transform: uppercase;
 }
 
+.about-showcase-header .section-kicker {
+  color: #a3a3a3;
+}
+
 .about-showcase-header .section-title {
   color: #f8fafc;
 }
 
 .about-showcase-header .section-title span {
-  color: #72b996;
+  color: #f8fafc;
 }
 
 .about-showcase-instruction {
@@ -2679,15 +2719,15 @@ a {
   display: flex;
   flex-direction: column;
   padding: clamp(24px, 4vw, 52px);
-  border: 1px solid rgba(114, 185, 150, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 24px;
-  background: linear-gradient(145deg, #18201d, #101513);
+  background: linear-gradient(145deg, #1a1a1a, #101010);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
   animation: aboutCardReveal 480ms var(--ease-smooth);
 }
 
 .about-showcase-card::after {
-  background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(114, 185, 150, 0.12), transparent 50%) !important;
+  background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 255, 255, 0.08), transparent 50%) !important;
 }
 
 .about-showcase-card-title {
@@ -2710,12 +2750,12 @@ a {
   place-items: center;
   border-radius: 14px;
   color: #0b0b0c;
-  background: #72b996;
+  background: #f8fafc;
 }
 
 .about-showcase-counter {
   margin-left: auto;
-  color: #72b996;
+  color: #a3a3a3;
   font-family: var(--font-mono);
   font-size: 12px;
 }
@@ -2743,7 +2783,7 @@ a {
 .about-showcase-eyebrow,
 .about-showcase-meta,
 .about-showcase-date {
-  color: #72b996;
+  color: #a3a3a3;
   font-family: var(--font-mono);
   font-size: 12px;
 }
@@ -2790,7 +2830,7 @@ a {
   z-index: 4;
   height: 3px;
   transform-origin: left;
-  background: #72b996;
+  background: #f8fafc;
 }
 
 @keyframes aboutCardReveal {
@@ -2811,6 +2851,7 @@ a {
 
   .about-showcase-sticky {
     position: relative;
+    top: auto;
     height: auto;
     min-height: 0;
     overflow: visible;
